@@ -3,18 +3,18 @@
  */
 
 /*============================================== Node Modules ============================================== */
-import { connect, connection, disconnect } from 'mongoose';
+import mongoose from 'mongoose';
 /*============================================== Custom Modules ============================================== */
 import { env } from './env.config';
 let isConnected: boolean = false;
 const connectDB = async (): Promise<void> => {
 	// if already connect with DB
-	if (isConnected || connection.readyState === 1) {
-		console.log(`🟡 MongoDB already connected. Skipping Connection`);
+	if (isConnected || mongoose.connection.readyState === 1) {
+		console.log(`🟡 MongoDB already connected. Skipping mongoose.Connection`);
 		return;
 	}
 	// Currently connecting
-	if (connection.readyState === 2) {
+	if (mongoose.connection.readyState === 2) {
 		console.log('🟡 MongoDB connection already in progress...');
 		return;
 	}
@@ -22,7 +22,7 @@ const connectDB = async (): Promise<void> => {
 	try {
 		console.log('🔄 Connecting to MongoDB...');
 
-		const conn = await connect(env.mongodbUri, {
+		const conn = await mongoose.connect(env.mongodbUri, {
 			appName: 'Bloggify',
 			dbName: env.dbName,
 			connectTimeoutMS: 5000,
@@ -41,12 +41,12 @@ const connectDB = async (): Promise<void> => {
 };
 
 const disconnectDB = async (): Promise<void> => {
-	if (connection.readyState !== 1) {
+	if (mongoose.connection.readyState !== 1) {
 		console.log(`🟡 MongoDB is not Connected. No need to disconnect.`);
 		return;
 	}
 	try {
-		await disconnect();
+		await mongoose.disconnect();
 		isConnected = false;
 		console.log(`🔴 Mongodb Disconnected Successfully.`);
 	} catch (error) {
