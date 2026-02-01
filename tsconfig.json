@@ -9,6 +9,7 @@
     "baseUrl": "./src",
     "paths": {
       "@config/*": ["./config/*"],
+      "@interface/*": ["./interface/*"],
       "@module/*": ["./module/*"],
       "@middleware/*": ["./middleware/*"],
       "@types/*": ["./types/*"],
