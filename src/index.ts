@@ -3,10 +3,10 @@
  */
 
 /*============================================== Custom Modules ============================================== */
-import { connectDB, disconnectDB } from '@config/db.config';
-import { app } from './app';
-import { env } from '@config/env.config';
-import { Server } from 'http';
+import { connectDB, disconnectDB } from '@config/db.config.ts';
+import { app } from './app.ts';
+import { env } from '@config/env.config.ts';
+import { Server } from 'node:http';
 /*============================================== Server Reference ============================================== */
 let server: Server;
 let isShuttingDown: boolean = false;

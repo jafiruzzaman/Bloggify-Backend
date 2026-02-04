@@ -9,8 +9,10 @@ import cookieParser from 'cookie-parser';
 import cors, { type CorsOptions } from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
-import { rateLimit } from '@config/rateLimit.config';
-import { env } from '@config/env.config';
+import { rateLimit } from '@config/rateLimit.config.ts';
+import { env } from '@config/env.config.ts';
+import { AuthRouter } from '@module/auth/auth.routes.ts';
+import { userRouter } from '@module/user/user.routes.ts';
 
 /*============================================== Custom Modules ============================================== */
 const app: Express = express();
@@ -33,6 +35,9 @@ const corsOptions: CorsOptions = {
 	credentials: true,
 };
 app.use(cors(corsOptions));
+
+/*============================================== Cookie-Parser Configuration ============================================== */
+app.use(cookieParser());
 
 /*============================================== Express JSON configuration ============================================== */
 app.use(
@@ -89,6 +94,9 @@ app.get('/health', (_req: Request, res: Response) => {
 	});
 });
 
+/*============================================== 404 Handler ============================================== */
+app.use('/api/v1/auth', AuthRouter);
+app.use('/api/v1/users', userRouter);
 /*============================================== 404 Handler ============================================== */
 app.use((_req: Request, res: Response) => {
 	res.status(404).json({

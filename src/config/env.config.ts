@@ -6,12 +6,12 @@
 import dotenv from 'dotenv';
 dotenv.config();
 /*============================================== Custom Modules ============================================== */
-import type { IEnv } from '@interface/env.interface';
+import type { IEnv } from '@interface/env.interface.ts';
 
 const config: IEnv = {
 	port: Number(process.env.PORT),
 	apiVersion: process.env.API_VERSION as string,
-	nodeEnv: process.env.NODE_ENV as string | 'development',
+	nodeEnv: process.env.NODE_ENV as string,
 
 	mongodbUri: process.env.MONGODB_URI as string,
 	dbName: process.env.DB_NAME as string,

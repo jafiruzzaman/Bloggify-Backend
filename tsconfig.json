@@ -5,26 +5,26 @@
     "outDir": "dist",
 
     // Path Alias
-    "ignoreDeprecations": "6.0",
     "baseUrl": "./src",
     "paths": {
       "@config/*": ["./config/*"],
       "@interface/*": ["./interface/*"],
       "@module/*": ["./module/*"],
-      "@middleware/*": ["./middleware/*"],
+      "@middlewares/*": ["./middlewares/*"],
       "@types/*": ["./types/*"],
-      "@utils/*": ["./utils/*"]
+      "@utils/*": ["./utils/*"],
+      "@validation/*": ["./validation/*"]
     },
     // Environment setup & latest features
     "lib": ["ESNext"],
     "target": "ESNext",
-    "module": "Preserve",
+    "module": "NodeNext",
     "moduleDetection": "force",
     "jsx": "react-jsx",
     "allowJs": true,
 
     // Bundler mode
-    "moduleResolution": "bundler",
+    "moduleResolution": "NodeNext",
     "allowImportingTsExtensions": true,
     "verbatimModuleSyntax": true,
     "noEmit": true,
