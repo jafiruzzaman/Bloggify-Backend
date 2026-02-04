@@ -22,6 +22,7 @@ const userSchema = new Schema<IUser>(
 			required: true,
 			trim: true,
 			unique: true,
+			index: 1,
 		},
 		password: {
 			type: String,
@@ -29,6 +30,11 @@ const userSchema = new Schema<IUser>(
 			minlength: [8, 'Password must be at least 8 characters'],
 			trim: true,
 			select: false,
+		},
+		role: {
+			type: String,
+			required: true,
+			trim: true,
 		},
 		bio: {
 			type: String,

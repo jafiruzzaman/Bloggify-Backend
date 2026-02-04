@@ -5,6 +5,7 @@ export interface IUser extends Document {
 	name: string;
 	email: string;
 	password: string;
+	role: 'user' | 'admin';
 	profileImage?: string;
 	bio?: string;
 	blogs?: Types.ObjectId[];
