@@ -33,7 +33,7 @@ export class AuthService {
 		const userInDB: IUser | null = await UserModel.findOne({
 			email: payload.email,
 		});
-		
+
 		if (!userInDB) {
 			throw new AppError('user Not Found', 404);
 		}

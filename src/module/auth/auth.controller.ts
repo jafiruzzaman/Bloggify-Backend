@@ -69,11 +69,9 @@ export class AuthController {
 			const refreshToken = generateRefreshToken(payload);
 
 			// Save refresh token in DB
-			await UserModel.findByIdAndUpdate(
-				user._id,
-				{ refreshToken: refreshToken },
-				{ new: true }
-			);
+			await UserModel.findByIdAndUpdate(user._id, {
+				refreshToken: refreshToken,
+			});
 
 			// Send refresh token as secure httpOnly cookie
 			return res
@@ -102,5 +100,22 @@ export class AuthController {
 				.status(500)
 				.json({ success: false, message: 'Internal Server Error' });
 		}
+	}
+
+	static async signOut(req: Request, res: Response) {
+		const userId = (req as any).user.id;
+		if (!userId) {
+			throw new AppError('Unauthorized', 401);
+		}
+		// remove the refresh token form the database
+		await UserModel.findByIdAndUpdate(userId, {
+			refreshToken: null,
+		});
+
+		// delete token from cookie
+		return res.status(200).clearCookie('refreshToken').json({
+			success: true,
+			message: 'Sign-out successfully',
+		});
 	}
 }
