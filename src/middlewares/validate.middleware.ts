@@ -1,3 +1,9 @@
+/**
+ * @copyright 2026 Mohammad Jafiruzzaman
+ */
+
+/*============================================== Node Modules ============================================== */
+
 import type { ZodSchema } from 'zod';
 import type { Request, Response, NextFunction } from 'express';
 

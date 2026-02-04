@@ -8,10 +8,11 @@ import { Router, type Request, type Response } from 'express';
 /*============================================== Custom Modules ============================================== */
 import { UserController } from './user.controller';
 import { authenticate } from '@middlewares/auth.middleware.ts';
+import { admin } from '@middlewares/admin.middleware';
 
 const router: Router = Router();
 
-router.get('/', (req: Request, res: Response) => {
+router.get('/', authenticate, admin, (req: Request, res: Response) => {
 	res.status(200).json({
 		success: true,
 		message: 'Get All Users (Admin)',

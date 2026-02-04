@@ -1,5 +1,12 @@
-import { AuthService } from './auth.service';
+/**
+ * @copyright 2026 Mohammad Jafiruzzaman
+ */
+
+/*============================================== Node Modules ============================================== */
 import type { Request, Response } from 'express';
+
+/*============================================== Custom Modules ============================================== */
+import { AuthService } from './auth.service';
 import { AppError } from '@utils/appError';
 import { generateAccessToken, generateRefreshToken } from '@utils/jwt.utils';
 import { UserModel } from '@module/user/user.model';

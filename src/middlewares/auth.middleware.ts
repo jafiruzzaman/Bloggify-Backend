@@ -1,8 +1,15 @@
+/**
+ * @copyright 2026 Mohammad Jafiruzzaman
+ */
+
+/*============================================== Node Modules ============================================== */
+import type { NextFunction, Request, Response } from 'express';
+import { verify } from 'jsonwebtoken';
+
+/*============================================== Custom Modules ============================================== */
 import { env } from '@config/env.config';
 import { AppError } from '@utils/appError';
 import type { JWTPayload } from '@utils/jwt.utils';
-import type { NextFunction, Request, Response } from 'express';
-import { verify } from 'jsonwebtoken';
 
 export const authenticate = (
 	req: Request,
