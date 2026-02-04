@@ -2,17 +2,14 @@
  * @copyright 2026 Mohammad Jafiruzzaman
  */
 
+/*============================================== Node Modules ============================================== */
 import { Router, type Request, type Response } from 'express';
 
-/*============================================== Node Modules ============================================== */
-const router: Router = Router();
+/*============================================== Custom Modules ============================================== */
+import { UserController } from './user.controller';
+import { authenticate } from '@middlewares/auth.middleware.ts';
 
-router.get('/:id', (req: Request, res: Response) => {
-	res.status(200).json({
-		success: true,
-		message: 'Get Single User ',
-	});
-});
+const router: Router = Router();
 
 router.get('/', (req: Request, res: Response) => {
 	res.status(200).json({
@@ -20,6 +17,8 @@ router.get('/', (req: Request, res: Response) => {
 		message: 'Get All Users (Admin)',
 	});
 });
+
+router.get('/:id', authenticate, UserController.getUserById);
 
 router.put('/:id', (req: Request, res: Response) => {
 	res.status(200).json({

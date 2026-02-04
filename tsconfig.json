@@ -11,7 +11,7 @@
       "@config/*": ["./config/*"],
       "@interface/*": ["./interface/*"],
       "@module/*": ["./module/*"],
-      "@middleware/*": ["./middleware/*"],
+      "@middlewares/*": ["./middlewares/*"],
       "@types/*": ["./types/*"],
       "@utils/*": ["./utils/*"],
       "@validation/*": ["./validation/*"]
