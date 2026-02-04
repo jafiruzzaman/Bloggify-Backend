@@ -13,7 +13,8 @@
       "@module/*": ["./module/*"],
       "@middleware/*": ["./middleware/*"],
       "@types/*": ["./types/*"],
-      "@utils/*": ["./utils/*"]
+      "@utils/*": ["./utils/*"],
+      "@validation/*": ["./validation/*"]
     },
     // Environment setup & latest features
     "lib": ["ESNext"],
