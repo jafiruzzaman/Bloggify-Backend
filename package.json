@@ -6,7 +6,7 @@
     "dev": "bun --watch src/index.ts",
     "build": "tsc -p tsconfig.json",
     "start": "bun dist/index.js",
-    "format":"bunx prettier . --write"
+    "format": "bunx prettier . --write"
   },
   "license": "Apache-2.0",
   "type": "module",
@@ -47,6 +47,7 @@
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.1.5",
     "morgan": "^1.10.1",
-    "multer": "^2.0.2"
+    "multer": "^2.0.2",
+    "zod": "^4.3.6"
   }
 }
