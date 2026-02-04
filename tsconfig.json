@@ -11,9 +11,10 @@
       "@config/*": ["./config/*"],
       "@interface/*": ["./interface/*"],
       "@module/*": ["./module/*"],
-      "@middleware/*": ["./middleware/*"],
+      "@middlewares/*": ["./middlewares/*"],
       "@types/*": ["./types/*"],
-      "@utils/*": ["./utils/*"]
+      "@utils/*": ["./utils/*"],
+      "@validation/*": ["./validation/*"]
     },
     // Environment setup & latest features
     "lib": ["ESNext"],

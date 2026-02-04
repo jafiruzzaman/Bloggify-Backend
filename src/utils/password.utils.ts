@@ -18,4 +18,3 @@ const comparePassword = async (
 
 /*============================================== Export hashedPassword & comparePassword ============================================== */
 export { hashedPassword, comparePassword };
-
