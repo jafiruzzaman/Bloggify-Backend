@@ -11,6 +11,7 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 import { rateLimit } from '@config/rateLimit.config';
 import { env } from '@config/env.config';
+import { AuthRouter } from '@module/auth/auth.routes';
 
 /*============================================== Custom Modules ============================================== */
 const app: Express = express();
@@ -89,6 +90,8 @@ app.get('/health', (_req: Request, res: Response) => {
 	});
 });
 
+/*============================================== 404 Handler ============================================== */
+app.use('/api/v1/auth', AuthRouter);
 /*============================================== 404 Handler ============================================== */
 app.use((_req: Request, res: Response) => {
 	res.status(404).json({
