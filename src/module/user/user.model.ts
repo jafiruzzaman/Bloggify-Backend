@@ -6,7 +6,7 @@
 import { Schema, Types, model } from 'mongoose';
 
 /*============================================== Custom Modules ============================================== */
-import type { IUser } from '@interface/user.interface';
+import type { IUser } from '@interface/user.interface.ts';
 
 const userSchema = new Schema<IUser>(
 	{

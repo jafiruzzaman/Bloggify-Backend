@@ -5,8 +5,8 @@
 /*============================================== Node Modules ============================================== */
 
 /*============================================== Custom Modules ============================================== */
-import type { IUser } from '@interface/user.interface';
-import { UserModel } from './user.model';
+import type { IUser } from '@interface/user.interface.ts';
+import { UserModel } from './user.model.ts';
 
 export class UserService {
 	static async getAllUsers(): Promise<Omit<IUser, '-password'> | null> {

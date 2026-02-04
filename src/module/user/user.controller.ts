@@ -6,21 +6,21 @@
 import type { Request, Response } from 'express';
 
 /*============================================== Custom Modules ============================================== */
-import { AppError } from '@utils/appError';
-import { UserService } from './user.service';
+import { AppError } from '@utils/appError.ts';
+import { UserService } from './user.service.ts';
 
 export class UserController {
 	static async getAllUsers(req: Request, res: Response) {
 		try {
 			const result = await UserService.getAllUsers();
-			
+
 			if (!result) {
 				return res.status(404).json({
 					success: false,
 					message: 'No Resource Found',
 				});
 			}
-			
+
 			return res.status(200).json({
 				success: true,
 				message: 'Fetch all user data',

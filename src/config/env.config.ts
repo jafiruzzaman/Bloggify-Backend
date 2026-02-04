@@ -6,7 +6,7 @@
 import dotenv from 'dotenv';
 dotenv.config();
 /*============================================== Custom Modules ============================================== */
-import type { IEnv } from '@interface/env.interface';
+import type { IEnv } from '@interface/env.interface.ts';
 
 const config: IEnv = {
 	port: Number(process.env.PORT),

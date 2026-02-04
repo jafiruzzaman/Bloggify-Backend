@@ -5,7 +5,7 @@
 /*============================================== Node Modules ============================================== */
 import { rateLimit as rateLimiter } from 'express-rate-limit';
 /*============================================== Custom Modules ============================================== */
-import { env } from './env.config';
+import { env } from './env.config.ts';
 
 const rateLimit = rateLimiter({
 	limit: env.rateLimitMax,

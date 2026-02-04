@@ -4,10 +4,10 @@
 
 /*============================================== Node Modules ============================================== */
 
-import type { ZodSchema } from 'zod';
+import type { ZodType } from 'zod';
 import type { Request, Response, NextFunction } from 'express';
 
-export const validate = (schema: ZodSchema) => {
+export const validate = (schema: ZodType) => {
 	return (req: Request, res: Response, next: NextFunction) => {
 		try {
 			schema.parse({

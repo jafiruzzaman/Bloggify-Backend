@@ -7,9 +7,9 @@ import type { NextFunction, Request, Response } from 'express';
 import { verify } from 'jsonwebtoken';
 
 /*============================================== Custom Modules ============================================== */
-import { env } from '@config/env.config';
-import { AppError } from '@utils/appError';
-import type { JWTPayload } from '@utils/jwt.utils';
+import { env } from '@config/env.config.ts';
+import { AppError } from '@utils/appError.ts';
+import type { JWTPayload } from '@utils/jwt.utils.ts';
 
 export const authenticate = (
 	req: Request,
