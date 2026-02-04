@@ -1,6 +1,9 @@
 import { AuthService } from './auth.service';
 import type { Request, Response } from 'express';
 import { AppError } from '@utils/appError';
+import { generateAccessToken, generateRefreshToken } from '@utils/jwt.utils';
+import { UserModel } from '@module/user/user.model';
+import { env } from '@config/env.config';
 
 export class AuthController {
 	static async signUp(req: Request, res: Response) {
@@ -46,6 +49,58 @@ export class AuthController {
 				success: false,
 				message: 'Internal Server Error',
 			});
+		}
+	}
+	static async signIn(req: Request, res: Response) {
+		const { email, password } = req.body; // ✅ remove await
+
+		if (!email || !password) {
+			return res.status(400).json({
+				success: false,
+				message: 'All fields are required',
+			});
+		}
+
+		try {
+			const user = await AuthService.signIn(req.body);
+
+			const payload = { id: user._id.toString(), role: user.role };
+			const accessToken = generateAccessToken(payload); // ✅ use access token
+			const refreshToken = generateRefreshToken(payload);
+
+			// Save refresh token in DB
+			await UserModel.findByIdAndUpdate(
+				user._id,
+				{ refreshToken: refreshToken },
+				{ new: true }
+			);
+
+			// Send refresh token as secure httpOnly cookie
+			return res
+				.status(200)
+				.cookie('refreshToken', refreshToken, {
+					maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+					sameSite: env.nodeEnv === 'production' ? 'none' : 'lax',
+					secure: env.nodeEnv === 'production',
+					httpOnly: true,
+				})
+				.json({
+					success: true,
+					message: 'User signed in successfully',
+					data: {
+						user,
+						accessToken, // send access token in JSON
+					},
+				});
+		} catch (err: any) {
+			if (err instanceof AppError) {
+				return res
+					.status(err.statusCode)
+					.json({ success: false, message: err.message });
+			}
+			return res
+				.status(500)
+				.json({ success: false, message: 'Internal Server Error' });
 		}
 	}
 }
