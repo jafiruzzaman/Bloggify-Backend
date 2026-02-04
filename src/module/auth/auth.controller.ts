@@ -1,9 +1,16 @@
-import { AuthService } from './auth.service';
+/**
+ * @copyright 2026 Mohammad Jafiruzzaman
+ */
+
+/*============================================== Node Modules ============================================== */
 import type { Request, Response } from 'express';
-import { AppError } from '@utils/appError';
-import { generateAccessToken, generateRefreshToken } from '@utils/jwt.utils';
-import { UserModel } from '@module/user/user.model';
-import { env } from '@config/env.config';
+
+/*============================================== Custom Modules ============================================== */
+import { AuthService } from './auth.service.ts';
+import { AppError } from '@utils/appError.ts';
+import { generateAccessToken, generateRefreshToken } from '@utils/jwt.utils.ts';
+import { UserModel } from '@module/user/user.model.ts';
+import { env } from '@config/env.config.ts';
 
 export class AuthController {
 	static async signUp(req: Request, res: Response) {

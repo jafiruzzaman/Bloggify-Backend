@@ -1,7 +1,13 @@
-import type { ZodSchema } from 'zod';
+/**
+ * @copyright 2026 Mohammad Jafiruzzaman
+ */
+
+/*============================================== Node Modules ============================================== */
+
+import type { ZodType } from 'zod';
 import type { Request, Response, NextFunction } from 'express';
 
-export const validate = (schema: ZodSchema) => {
+export const validate = (schema: ZodType) => {
 	return (req: Request, res: Response, next: NextFunction) => {
 		try {
 			schema.parse({

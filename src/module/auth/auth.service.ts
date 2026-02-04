@@ -6,10 +6,10 @@
 import bcrypt from 'bcrypt';
 
 /*============================================== Custom Modules ============================================== */
-import type { SignInPayload } from '@interface/auth.interface';
-import type { IUser } from '@interface/user.interface';
-import { UserModel } from '@module/user/user.model';
-import { AppError } from '@utils/appError';
+import type { SignInPayload } from '@interface/auth.interface.ts';
+import type { IUser } from '@interface/user.interface.ts';
+import { UserModel } from '@module/user/user.model.ts';
+import { AppError } from '@utils/appError.ts';
 
 export class AuthService {
 	static async signUp(payload: SignInPayload): Promise<IUser> {
