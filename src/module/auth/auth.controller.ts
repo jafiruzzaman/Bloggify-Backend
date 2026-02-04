@@ -52,7 +52,7 @@ export class AuthController {
 		}
 	}
 	static async signIn(req: Request, res: Response) {
-		const { email, password } = req.body; // ✅ remove await
+		const { email, password } = req.body;
 
 		if (!email || !password) {
 			return res.status(400).json({
@@ -65,13 +65,15 @@ export class AuthController {
 			const user = await AuthService.signIn(req.body);
 
 			const payload = { id: user._id.toString(), role: user.role };
-			const accessToken = generateAccessToken(payload); // ✅ use access token
+			const accessToken = generateAccessToken(payload);
 			const refreshToken = generateRefreshToken(payload);
 
-			// Save refresh token in DB
-			await UserModel.findByIdAndUpdate(user._id, {
-				refreshToken: refreshToken,
-			});
+			// ✅ Save refresh token in DB
+			const userInDB = await UserModel.findOne({ email: req.body.email });
+			if (!userInDB) throw new AppError('User not found', 404);
+
+			userInDB.refreshToken = refreshToken; // assign token
+			await userInDB.save(); // persist in DB
 
 			// Send refresh token as secure httpOnly cookie
 			return res
@@ -86,8 +88,8 @@ export class AuthController {
 					success: true,
 					message: 'User signed in successfully',
 					data: {
-						user,
-						accessToken, // send access token in JSON
+						user: userInDB, // updated user object
+						accessToken,
 					},
 				});
 		} catch (err: any) {
@@ -117,5 +119,29 @@ export class AuthController {
 			success: true,
 			message: 'Sign-out successfully',
 		});
+	}
+
+	static async getMe(req: Request, res: Response) {
+		try {
+			const userId = (req as any).user.id; // extracted from JWT
+			const user = await AuthService.getMe(userId);
+
+			return res.status(200).json({
+				success: true,
+				message: 'Get Current User Profile',
+				data: { user },
+			});
+		} catch (err: any) {
+			if (err instanceof AppError) {
+				return res.status(err.statusCode).json({
+					success: false,
+					message: err.message,
+				});
+			}
+			return res.status(500).json({
+				success: false,
+				message: 'Internal Server Error',
+			});
+		}
 	}
 }

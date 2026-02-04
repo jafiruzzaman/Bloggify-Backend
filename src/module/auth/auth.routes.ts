@@ -17,4 +17,6 @@ router.post('/sign-in', validate(signInSchema), AuthController.signIn);
 
 router.post('/sign-out', authenticate, AuthController.signOut);
 
+router.get('/me', authenticate, AuthController.getMe);
+
 export { router as AuthRouter };

@@ -47,4 +47,17 @@ export class AuthService {
 		const { password, ...userObj } = userInDB.toObject();
 		return userObj;
 	}
+
+	static async getMe(userId: string) {
+		if (!userId) {
+			throw new AppError('Unauthorized', 401);
+		}
+
+		const user = await UserModel.findById(userId);
+		if (!user) {
+			throw new AppError('No User Found', 404);
+		}
+
+		return user; // return the plain user object
+	}
 }
