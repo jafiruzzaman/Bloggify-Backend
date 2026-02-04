@@ -12,12 +12,7 @@ import { admin } from '@middlewares/admin.middleware';
 
 const router: Router = Router();
 
-router.get('/', authenticate, admin, (req: Request, res: Response) => {
-	res.status(200).json({
-		success: true,
-		message: 'Get All Users (Admin)',
-	});
-});
+router.get('/', authenticate, admin, UserController.getAllUsers);
 
 router.get('/:id', authenticate, UserController.getUserById);
 

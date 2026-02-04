@@ -10,6 +10,35 @@ import { AppError } from '@utils/appError';
 import { UserService } from './user.service';
 
 export class UserController {
+	static async getAllUsers(req: Request, res: Response) {
+		try {
+			const result = await UserService.getAllUsers();
+			
+			if (!result) {
+				return res.status(404).json({
+					success: false,
+					message: 'No Resource Found',
+				});
+			}
+			
+			return res.status(200).json({
+				success: true,
+				message: 'Fetch all user data',
+				data: result,
+			});
+		} catch (error) {
+			if (error instanceof AppError) {
+				return res.status(error.statusCode).json({
+					success: false,
+					error: error.message,
+				});
+			}
+			return res.status(500).json({
+				success: false,
+				error: error || 'Internal Server Error',
+			});
+		}
+	}
 	static async getUserById(req: Request, res: Response) {
 		const userId = await (req as any).user.id;
 		if (!userId) {
@@ -26,8 +55,6 @@ export class UserController {
 				data: response,
 			});
 		} catch (error: any) {
-			console.log(error);
-
 			if (error instanceof AppError) {
 				return res.status(error.statusCode).json({
 					success: false,
