@@ -16,12 +16,7 @@ router.get('/', authenticate, admin, UserController.getAllUsers);
 
 router.get('/:id', authenticate, UserController.getUserById);
 
-router.put('/:id', (req: Request, res: Response) => {
-	res.status(200).json({
-		success: true,
-		message: 'Update User by User/Admin',
-	});
-});
+router.patch('/:id', authenticate, UserController.updateUser);
 
 router.delete('/:id', (req: Request, res: Response) => {
 	res.status(204).json({

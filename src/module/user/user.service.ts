@@ -19,4 +19,19 @@ export class UserService {
 		const user = await UserModel.findById(id).select('-password').lean<IUser>();
 		return user;
 	}
+	static async updateUserById(
+		id: string,
+		payload: any
+	): Promise<Omit<IUser, 'password'> | null> {
+		const result = await UserModel.findByIdAndUpdate(
+			id,
+			{
+				...payload,
+			},
+			{
+				new: true,
+			}
+		);
+		return result;
+	}
 }

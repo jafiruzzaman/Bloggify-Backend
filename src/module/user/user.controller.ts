@@ -67,4 +67,41 @@ export class UserController {
 			});
 		}
 	}
+	static async updateUser(req: Request, res: Response) {
+		try {
+			const authUser = (req as any).user; // Authenticated user from middleware
+			const targetUserId = req.params.id as string; // The ID of the user to update
+
+			// 🔐 Authorization check
+			if (authUser.role !== 'admin' && authUser.id !== targetUserId) {
+				return res.status(403).json({
+					success: false,
+					message: 'You are not allowed to update this account',
+				});
+			}
+
+			// Optional: prevent users from updating sensitive fields like role or password
+			if (authUser.role !== 'admin') {
+				delete req.body.role; // normal users cannot change role
+				delete req.body.password; // normal users cannot change password here
+			}
+
+			const updatedUser = await UserService.updateUserById(
+				targetUserId,
+				req.body
+			);
+
+			return res.status(200).json({
+				success: true,
+				message: 'User updated successfully',
+				data: updatedUser,
+			});
+		} catch (err) {
+			console.error(err);
+			return res.status(500).json({
+				success: false,
+				message: 'Server error',
+			});
+		}
+	}
 }
