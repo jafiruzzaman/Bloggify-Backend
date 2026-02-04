@@ -12,17 +12,20 @@ import bcrypt from 'bcrypt';
 
 export class AuthService {
 	static async signUp(payload: SignInPayload): Promise<IUser> {
-		// Check if User exist or not
 		const existingUser = await UserModel.findOne({ email: payload.email });
 		if (existingUser) {
 			throw new AppError('User Already Exist', 409);
 		}
+
 		const hashedPassword = await bcrypt.hash(payload.password, 10);
 
 		const user = await UserModel.create({
 			...payload,
 			password: hashedPassword,
 		});
-		return user;
+
+		// Remove password in a type-safe way
+		const { password, ...userWithoutPassword } = user.toObject() as any;
+		return userWithoutPassword;
 	}
 }

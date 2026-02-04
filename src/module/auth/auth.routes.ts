@@ -3,16 +3,14 @@
  */
 
 /*============================================== Node Modules ============================================== */
+import { signUpSchema } from '@validation/auth.validation';
 import { Router } from 'express';
 import type { Request, Response } from 'express';
+import { validate } from 'middlewares/validate.middleware';
+import { AuthController } from './auth.controller';
 const router: Router = Router();
 
-router.get('/sign-up', (req: Request, res: Response) => {
-	res.status(201).json({
-		success: true,
-		message: 'User Sign-up Successfully',
-	});
-});
+router.post('/sign-up', validate(signUpSchema), AuthController.signUp);
 
 router.get('/sign-in', (req: Request, res: Response) => {
 	res.status(200).json({
