@@ -12,6 +12,7 @@ export interface IBlog extends Document {
 	slug: string;
 	coverImage: string;
 	content: string;
+	tags: [string];
 	author: Types.ObjectId;
 	likesCount: number;
 	commentsCount: number;
