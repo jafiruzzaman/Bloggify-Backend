@@ -18,11 +18,6 @@ router.get('/:id', authenticate, UserController.getUserById);
 
 router.patch('/:id', authenticate, UserController.updateUser);
 
-router.delete('/:id', (req: Request, res: Response) => {
-	res.status(204).json({
-		success: true,
-		message: 'Delete User by User/Admin',
-	});
-});
+router.delete('/:id', authenticate, UserController.deleteUser);
 
 export { router as userRouter };
