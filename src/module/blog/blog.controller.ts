@@ -9,6 +9,7 @@ import type { Request, Response } from 'express';
 import { AppError } from '@utils/appError.ts';
 import { BlogService } from './blog.service.ts';
 import slug from 'slug';
+import type { IBlog } from '@interface/blog.interface.ts';
 
 export class BlogController {
 	static async createBlog(req: Request, res: Response) {
@@ -30,9 +31,17 @@ export class BlogController {
 		}
 
 		try {
-			const generateSlug:string = slug(title);
-			const userId:any = (authUser.id).toString()
-			const payload = { title, content, status, category, tags, slug:generateSlug,author:userId };
+			const generateSlug: string = slug(title);
+			const userId: any = authUser.id.toString();
+			const payload = {
+				title,
+				content,
+				status,
+				category,
+				tags,
+				slug: generateSlug,
+				author: userId,
+			};
 
 			const result = await BlogService.CreateBlog(payload);
 
@@ -47,11 +56,34 @@ export class BlogController {
 					success: false,
 					message: error.message,
 				});
-			}		
+			}
 			return res.status(500).json({
 				success: false,
 				message: 'Internal Server Error',
 			});
+		}
+	}
+
+	static async GetAllBlogs(req: Request, res: Response) {
+		try {
+			const response: IBlog[] = await BlogService.GetAllBlogs();
+			return res.status(200).json({
+				success: true,
+				message: 'Fetched All Blogs',
+				data: response,
+			});
+		} catch (error) {
+			if (error instanceof AppError) {
+				return res.status(error.statusCode).json({
+					success: false,
+					message: error.message
+				})
+			}else{
+				return res.status(500).json({
+					success: false,
+					message:"Internal Server Error"
+				})
+			}
 		}
 	}
 }

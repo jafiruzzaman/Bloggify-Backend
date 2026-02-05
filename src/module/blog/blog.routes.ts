@@ -14,14 +14,9 @@ const router: Router = Router();
 
 router.post('/', authenticate, BlogController.createBlog);
 
-router.get('/', (req: Request, res: Response) => {
-	return res.status(200).json({
-		success: true,
-		message: 'Get All Blogs Successfully',
-	});
-});
+router.get('/', BlogController.GetAllBlogs);
 
-router.get('/:id', (req: Request, res: Response) => {
+router.get('/:slug', (req: Request, res: Response) => {
 	return res.status(200).json({
 		success: true,
 		message: 'Get Blog Successfully',

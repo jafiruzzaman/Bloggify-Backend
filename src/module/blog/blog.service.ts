@@ -16,12 +16,15 @@ interface payload {
 	tags: string[];
 	status: string;
 	author: string;
-	slug:string;
+	slug: string;
 }
 
 export class BlogService {
 	static async CreateBlog(payload: payload): Promise<IBlog> {
 		const result = await BlogModel.create(payload);
 		return result;
+	}
+	static async GetAllBlogs(): Promise<IBlog[]> {
+		return await BlogModel.find();
 	}
 }
