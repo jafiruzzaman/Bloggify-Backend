@@ -12,7 +12,7 @@ import { authenticate } from '@middlewares/auth.middleware.ts';
 
 const router: Router = Router();
 
-router.post('/', authenticate, BlogController.creteBlog);
+router.post('/', authenticate, BlogController.createBlog);
 
 router.get('/', (req: Request, res: Response) => {
 	return res.status(200).json({
