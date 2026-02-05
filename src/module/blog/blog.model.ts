@@ -57,4 +57,3 @@ const blogSchema = new Schema<IBlog>(
 blogSchema.index({ slug: 1 });
 
 export const BlogModel: Model<IBlog> = model<IBlog>('Blog', blogSchema);
-

@@ -6,14 +6,13 @@
 import { Router, type Request } from 'express';
 import type { Response } from 'express';
 
+/*============================================== Node Modules ============================================== */
+import { BlogController } from '@module/blog/blog.controller.ts';
+import { authenticate } from '@middlewares/auth.middleware.ts';
+
 const router: Router = Router();
 
-router.post('/', (req: Request, res: Response) => {
-	return res.status(201).json({
-		success: true,
-		message: 'Blog Created Successfully',
-	});
-});
+router.post('/', authenticate, BlogController.creteBlog);
 
 router.get('/', (req: Request, res: Response) => {
 	return res.status(200).json({
