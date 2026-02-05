@@ -13,6 +13,7 @@ import { rateLimit } from '@config/rateLimit.config.ts';
 import { env } from '@config/env.config.ts';
 import { AuthRouter } from '@module/auth/auth.routes.ts';
 import { userRouter } from '@module/user/user.routes.ts';
+import { BlogRouter } from '@module/blog/blog.routes.ts';
 
 /*============================================== Custom Modules ============================================== */
 const app: Express = express();
@@ -94,9 +95,10 @@ app.get('/health', (_req: Request, res: Response) => {
 	});
 });
 
-/*============================================== 404 Handler ============================================== */
+/*============================================== All Routes ============================================== */
 app.use('/api/v1/auth', AuthRouter);
 app.use('/api/v1/users', userRouter);
+app.use('/api/v1/blogs', BlogRouter);
 /*============================================== 404 Handler ============================================== */
 app.use((_req: Request, res: Response) => {
 	res.status(404).json({
