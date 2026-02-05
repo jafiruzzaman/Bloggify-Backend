@@ -27,4 +27,9 @@ export class BlogService {
 	static async GetAllBlogs(): Promise<IBlog[]> {
 		return await BlogModel.find();
 	}
+	static async GetBlogBySlug(slug: string): Promise<IBlog | null> {
+		return await BlogModel.findOne({
+			slug: slug,
+		});
+	}
 }

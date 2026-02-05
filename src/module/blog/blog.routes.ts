@@ -16,12 +16,7 @@ router.post('/', authenticate, BlogController.createBlog);
 
 router.get('/', BlogController.GetAllBlogs);
 
-router.get('/:slug', (req: Request, res: Response) => {
-	return res.status(200).json({
-		success: true,
-		message: 'Get Blog Successfully',
-	});
-});
+router.get('/:slug', BlogController.GetBlogBySlug);
 
 router.patch('/:id', (req: Request, res: Response) => {
 	return res.status(200).json({

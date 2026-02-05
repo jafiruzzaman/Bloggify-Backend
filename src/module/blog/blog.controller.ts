@@ -30,6 +30,10 @@ export class BlogController {
 			});
 		}
 
+		// convert tags into tags array
+		const tagsArray = typeof tags === "string" ? tags.split(",").map((t)=>t.replace(/"/g,"").trim()) : tags;
+
+
 		try {
 			const generateSlug: string = slug(title);
 			const userId: any = authUser.id.toString();
@@ -38,7 +42,7 @@ export class BlogController {
 				content,
 				status,
 				category,
-				tags,
+				tags:tagsArray,
 				slug: generateSlug,
 				author: userId,
 			};
@@ -76,13 +80,42 @@ export class BlogController {
 			if (error instanceof AppError) {
 				return res.status(error.statusCode).json({
 					success: false,
-					message: error.message
-				})
-			}else{
+					message: error.message,
+				});
+			} else {
 				return res.status(500).json({
 					success: false,
-					message:"Internal Server Error"
-				})
+					message: 'Internal Server Error',
+				});
+			}
+		}
+	}
+
+	static async GetBlogBySlug(req: Request, res: Response) {
+		const slug = req.params.slug;
+		if (!slug) {
+			return res.status(400).json({
+				success: false,
+			});
+		}
+		try {
+			const response = await BlogService.GetBlogBySlug(slug);
+			return res.status(200).json({
+				success: true,
+				message: 'Fetched Blog By Slug',
+				data: (response),
+			});
+		} catch (error) {
+			if (error instanceof AppError) {
+				return res.status(error.statusCode).json({
+					success: false,
+					message: error.message,
+				});
+			} else {
+				return res.status(500).json({
+					success: false,
+					message: 'Internal Server Error',
+				});
 			}
 		}
 	}
