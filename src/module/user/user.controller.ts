@@ -104,4 +104,37 @@ export class UserController {
 			});
 		}
 	}
+	static async deleteUser(req: Request, res: Response) {
+		try {
+			const authUser = (req as any).user;
+			const targetUserId = req.params.id as string;
+
+			// Authorization check
+			if (authUser.role !== 'admin' && authUser.id !== targetUserId) {
+				return res.status(403).json({
+					success: false,
+					message: 'You are not allowed to delete this account',
+				});
+			}
+
+			const deletedUser = await UserService.deleteUserById(targetUserId);
+
+			if (!deletedUser) {
+				return res.status(404).json({
+					success: false,
+					message: 'User not found',
+				});
+			}
+
+			return res.status(204).json({
+				success: true,
+				message: 'User deleted successfully',
+			});
+		} catch (error) {
+			return res.status(500).json({
+				success: false,
+				message: 'Internal server error',
+			});
+		}
+	}
 }
