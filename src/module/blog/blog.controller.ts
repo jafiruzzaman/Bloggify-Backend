@@ -10,6 +10,7 @@ import { AppError } from '@utils/appError.ts';
 import { BlogService } from './blog.service.ts';
 import slug from 'slug';
 import type { IBlog } from '@interface/blog.interface.ts';
+import { BlogModel } from './blog.model.ts';
 
 export class BlogController {
 	static async createBlog(req: Request, res: Response) {
@@ -31,8 +32,10 @@ export class BlogController {
 		}
 
 		// convert tags into tags array
-		const tagsArray = typeof tags === "string" ? tags.split(",").map((t)=>t.replace(/"/g,"").trim()) : tags;
-
+		const tagsArray =
+			typeof tags === 'string'
+				? tags.split(',').map((t) => t.replace(/"/g, '').trim())
+				: tags;
 
 		try {
 			const generateSlug: string = slug(title);
@@ -42,7 +45,7 @@ export class BlogController {
 				content,
 				status,
 				category,
-				tags:tagsArray,
+				tags: tagsArray,
 				slug: generateSlug,
 				author: userId,
 			};
@@ -99,11 +102,11 @@ export class BlogController {
 			});
 		}
 		try {
-			const response = await BlogService.GetBlogBySlug(slug);
+			const response = await BlogService.GetBlogBySlug(slug.toString());
 			return res.status(200).json({
 				success: true,
 				message: 'Fetched Blog By Slug',
-				data: (response),
+				data: response,
 			});
 		} catch (error) {
 			if (error instanceof AppError) {
@@ -117,6 +120,61 @@ export class BlogController {
 					message: 'Internal Server Error',
 				});
 			}
+		}
+	}
+	static async updateBlog(req: Request, res: Response) {
+		const authUser = (req as any).user;
+		const { id: blogId } = req.params;
+
+		if (!blogId) {
+			return res.status(400).json({
+				success: false,
+				message: 'Blog Id Required',
+			});
+		}
+
+		const blog = await BlogModel.findById(blogId);
+
+		if (!blog) {
+			return res.status(404).json({
+				success: false,
+				message: 'Blog not found',
+			});
+		}
+
+		if (
+			authUser.role !== 'admin' &&
+			authUser.id.toString() !== blog.author.toString()
+		) {
+			return res.status(403).json({
+				success: false,
+				message: 'You are not allowed to update this blog',
+			});
+		}
+
+		try {
+			const response = await BlogService.UpdateBlog(
+				blogId.toString(),
+				req.body
+			);
+
+			return res.status(200).json({
+				success: true,
+				message: 'Blog updated successfully',
+				data: response,
+			});
+		} catch (error) {
+			if (error instanceof AppError) {
+				return res.status(400).json({
+					success: false,
+					message: error.message,
+				});
+			}
+
+			return res.status(500).json({
+				success: false,
+				message: 'Internal Server Error',
+			});
 		}
 	}
 }

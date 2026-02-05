@@ -18,12 +18,7 @@ router.get('/', BlogController.GetAllBlogs);
 
 router.get('/:slug', BlogController.GetBlogBySlug);
 
-router.patch('/:id', (req: Request, res: Response) => {
-	return res.status(200).json({
-		success: true,
-		message: 'Blog Updated Successfully',
-	});
-});
+router.patch('/:id', authenticate, BlogController.updateBlog);
 
 router.delete('/:id', (req: Request, res: Response) => {
 	return res.status(204).json({

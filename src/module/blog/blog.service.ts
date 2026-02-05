@@ -32,4 +32,20 @@ export class BlogService {
 			slug: slug,
 		});
 	}
+	static async UpdateBlog(id: string, payload: any): Promise<IBlog | null> {
+		const updateQuery: any = {};
+
+		if (payload.title) updateQuery.title = payload.title;
+		if (payload.content) updateQuery.content = payload.content;
+		if (payload.status) updateQuery.status = payload.status;
+		if (payload.category) updateQuery.category = payload.category;
+		if (payload.tags) {
+			updateQuery.tags = payload.tags;
+		}
+
+		return await BlogModel.findByIdAndUpdate(id, updateQuery, {
+			new: true,
+			runValidators: true,
+		});
+	}
 }
