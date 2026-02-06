@@ -5,11 +5,11 @@
 /*============================================== Node Modules ============================================== */
 
 /*============================================== Custom Modules ============================================== */
-import { BlogModel } from '@module/blog/blog.model.ts';
-import { CommentModel } from './comment.model.ts';
-import { UserModel } from '@module/user/user.model.ts';
-import type { IComment } from '@interface/comment.interface.ts';
-import { AppError } from '@utils/appError.ts';
+import { BlogModel } from '@module/blog/blog.model.js';
+import { CommentModel } from './comment.model.js';
+import { UserModel } from '@module/user/user.model.js';
+import type { IComment } from '@interface/comment.interface.js';
+import { AppError } from '@utils/appError.js';
 
 /*============================================== Comment Services ============================================== */
 interface payload {
@@ -48,11 +48,9 @@ export class CommentServices {
 		}
 		return data;
 	}
-	static async GetComment(id: string): Promise<IComment | undefined> {
-		const result = await CommentModel.findById(id);
-		if (!result) {
-			return;
-		}
+	static async GetComment(id: string): Promise<IComment | null> {
+		const result: IComment | null = await CommentModel.findById(id);
+		console.log(` result`, result);
 		return result;
 	}
 

@@ -4,13 +4,13 @@
 
 /*============================================== Node Modules ============================================== */
 import type { Request, Response } from 'express';
+import slug from 'slug';
 
 /*============================================== Custom Modules ============================================== */
-import { AppError } from '@utils/appError.ts';
-import { BlogService } from './blog.service.ts';
-import slug from 'slug';
-import type { IBlog } from '@interface/blog.interface.ts';
-import { BlogModel } from './blog.model.ts';
+import { AppError } from '@utils/appError.js';
+import { BlogService } from './blog.service.js';
+import type { IBlog } from '@interface/blog.interface.js';
+import { BlogModel } from './blog.model.js';
 
 export class BlogController {
 	static async createBlog(req: Request, res: Response) {

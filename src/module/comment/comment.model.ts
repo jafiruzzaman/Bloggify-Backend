@@ -6,7 +6,7 @@
 import { Schema, model, Model, Types } from 'mongoose';
 
 /*============================================== Custom Modules ============================================== */
-import type { IComment } from '@interface/comment.interface.ts';
+import type { IComment } from '@interface/comment.interface.js';
 
 const commentSchema: Schema<IComment> = new Schema<IComment>(
 	{

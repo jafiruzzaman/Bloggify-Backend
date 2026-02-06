@@ -5,9 +5,9 @@
 /*============================================== Node Modules ============================================== */
 
 /*============================================== Custom Modules ============================================== */
-import type { IBlog } from '@interface/blog.interface.ts';
-import { BlogModel } from './blog.model.ts';
-import { UserModel } from '@module/user/user.model.ts';
+import type { IBlog } from '@interface/blog.interface.js';
+import { BlogModel } from './blog.model.js';
+import { UserModel } from '@module/user/user.model.js';
 
 /*============================================== Payload Interface ============================================== */
 interface payload {

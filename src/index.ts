@@ -3,9 +3,9 @@
  */
 
 /*============================================== Custom Modules ============================================== */
-import { connectDB, disconnectDB } from '@config/db.config.ts';
-import { app } from './app.ts';
-import { env } from '@config/env.config.ts';
+import { connectDB, disconnectDB } from '@config/db.config.js';
+import { app } from './app.js';
+import { env } from '@config/env.config.js';
 import { Server } from 'node:http';
 /*============================================== Server Reference ============================================== */
 let server: Server;

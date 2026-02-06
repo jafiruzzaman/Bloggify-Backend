@@ -6,10 +6,10 @@
 import { type Request, type Response } from 'express';
 
 /*============================================== Custom Modules ============================================== */
-import { AppError } from '@utils/appError.ts';
-import type { ILike } from './like.model.ts';
-import { LikeService } from './like.service.ts';
-import { BlogModel } from '@module/blog/blog.model.ts';
+import { AppError } from '@utils/appError.js';
+import type { ILike } from './like.model.js';
+import { LikeService } from './like.service.js';
+import { BlogModel } from '@module/blog/blog.model.js';
 
 /*============================================== Like Controller ============================================== */
 

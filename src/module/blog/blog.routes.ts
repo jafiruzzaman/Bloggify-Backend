@@ -7,8 +7,8 @@ import { Router, type Request } from 'express';
 import type { Response } from 'express';
 
 /*============================================== Node Modules ============================================== */
-import { BlogController } from '@module/blog/blog.controller.ts';
-import { authenticate } from '@middlewares/auth.middleware.ts';
+import { BlogController } from '@module/blog/blog.controller.js';
+import { authenticate } from '@middlewares/auth.middleware.js';
 
 const router: Router = Router();
 
