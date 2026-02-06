@@ -55,9 +55,27 @@ export class BlogService {
 		});
 	}
 
-	static async DeleteBlog(id: string): Promise<void | null> {
-		return await BlogModel.findByIdAndDelete(id, {
-			new: true,
+	static async deleteBlog(blogId: string, authId: string) {
+		// 1️⃣ Find blog first
+		const blog = await BlogModel.findById(blogId);
+
+		if (!blog) {
+			throw new Error('Blog not found');
+		}
+
+		// 2️⃣ Authorization check
+		if (blog.author.toString() !== authId) {
+			throw new Error('You are not allowed to delete this blog');
+		}
+
+		// 3️⃣ Remove blog reference from user
+		await UserModel.findByIdAndUpdate(authId, {
+			$pull: { blogs: blogId },
 		});
+
+		// 4️⃣ Delete blog
+		await BlogModel.findByIdAndDelete(blogId);
+
+		return null;
 	}
 }

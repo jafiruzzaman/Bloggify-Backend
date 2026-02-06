@@ -197,7 +197,10 @@ export class BlogController {
 		}
 
 		try {
-			const response = await BlogService.DeleteBlog(blogId.toString());
+			const response = await BlogService.deleteBlog(
+				blogId.toString(),
+				authUser.id.toString()
+			);
 			return res.status(204).json({
 				success: true,
 				message: 'Blog Deleted Successfully',
