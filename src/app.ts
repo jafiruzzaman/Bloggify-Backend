@@ -18,6 +18,7 @@ import { userRouter } from '@module/user/user.routes.ts';
 import { BlogRouter } from '@module/blog/blog.routes.ts';
 import { LikeRouter } from '@module/like/like.routes.ts';
 import { globalErrorHandler } from '@middlewares/global.middleware.ts';
+import { CommentRouter } from '@module/comment/comment.routes.ts';
 
 const app: Express = express();
 
@@ -103,6 +104,8 @@ app.use('/api/v1/auth', AuthRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/blogs', BlogRouter);
 app.use('/api/v1/likes', LikeRouter);
+app.use('/api/v1/comments', CommentRouter);
+
 /*============================================== 404 Handler ============================================== */
 app.use((_req: Request, res: Response) => {
 	res.status(404).json({
