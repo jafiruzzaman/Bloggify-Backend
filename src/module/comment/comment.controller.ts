@@ -6,13 +6,14 @@
 import type { Request, Response } from 'express';
 /*============================================== Node Modules ============================================== */
 import { AppError } from '@utils/appError.ts';
+import { CommentServices } from './comment.service.ts';
 
 /*============================================== Comment Controller ============================================== */
 
 export class CommentController {
 	static async PostComment(req: Request, res: Response) {
 		const authUser = (req as any).user;
-		const blogId = req.params;
+		const { blog_id: blogId } = req.params;
 		const { content } = req.body;
 		console.log(authUser.id, blogId, content);
 
@@ -24,9 +25,15 @@ export class CommentController {
 		}
 
 		try {
+			const data = await CommentServices.PostComment({
+				author: authUser.id,
+				blog: blogId.toString(),
+				content: content.toString(),
+			});
 			return res.status(201).json({
 				success: true,
 				message: 'Comment Posted Successfully',
+				data,
 			});
 		} catch (error) {
 			if (error instanceof AppError) {
@@ -101,8 +108,8 @@ export class CommentController {
 	static async UpdateComment(req: Request, res: Response) {
 		const authUser = (req as any).user;
 		const blogId = req.params;
-		const {content} = req.body;
-				if (!authUser.id || !blogId || !content) {
+		const { content } = req.body;
+		if (!authUser.id || !blogId || !content) {
 			return res.status(400).json({
 				success: false,
 				message: 'All fields are required',

@@ -12,7 +12,7 @@ import { CommentController } from './comment.controller.ts';
 /*============================================== Routes ============================================== */
 const router: Router = Router();
 
-router.post('/', authenticate, CommentController.PostComment);
+router.post('/blog/:blog_id', authenticate, CommentController.PostComment);
 
 router.get(
 	'/blog/:blog_id/',
