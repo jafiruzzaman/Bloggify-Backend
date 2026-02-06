@@ -82,18 +82,19 @@ export class CommentController {
 
 	static async GetComment(req: Request, res: Response) {
 		const authUser = (req as any).user;
-		const blogId = req.params;
-		if (!authUser.id || !blogId) {
+		const { comment_id: id } = req.params;
+		if (!authUser.id || !{ comment_id: id }) {
 			return res.status(400).json({
 				success: false,
 				message: 'All fields are required',
 			});
 		}
 		try {
-			// const response =
+			const response = await CommentServices.GetComment(id as string);
 			return res.status(200).json({
 				success: true,
 				message: 'Get Comment Successfully',
+				data: response,
 			});
 		} catch (error) {
 			if (error instanceof AppError) {

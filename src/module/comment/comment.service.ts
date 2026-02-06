@@ -8,6 +8,7 @@
 import { BlogModel } from '@module/blog/blog.model.ts';
 import { CommentModel } from './comment.model.ts';
 import { UserModel } from '@module/user/user.model.ts';
+import type { IComment } from '@interface/comment.interface.ts';
 
 /*============================================== Comment Services ============================================== */
 interface payload {
@@ -37,7 +38,7 @@ export class CommentServices {
 		return comment;
 	}
 	static async GetCommentByBlog(payload: payload) {
-		const data = CommentModel.findOne({
+		const data = CommentModel.find({
 			author: payload.author,
 			blog: payload.blog,
 		});
@@ -45,5 +46,12 @@ export class CommentServices {
 			return;
 		}
 		return data;
+	}
+	static async GetComment(id: string): Promise<IComment | undefined> {
+		const result = await CommentModel.findById(id);
+		if (!result) {
+			return;
+		}
+		return result;
 	}
 }
