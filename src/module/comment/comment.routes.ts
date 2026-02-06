@@ -22,8 +22,12 @@ router.get(
 
 router.get('/:comment_id', authenticate, CommentController.GetComment);
 
-router.patch('/blog/:blog_id/comments/:comment_id', authenticate, CommentController.UpdateComment);
-router.delete('/:comment_id', authenticate, CommentController.DeleteComment);
+router.patch(
+	'/blog/:blog_id/comments/:comment_id',
+	authenticate,
+	CommentController.UpdateComment
+);
+router.delete('/blog/:blog_id/comments/:comment_id', authenticate, CommentController.DeleteComment);
 
 /*============================================== Export Routes ============================================== */
 export { router as CommentRouter };

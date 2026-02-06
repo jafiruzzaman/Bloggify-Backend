@@ -56,19 +56,52 @@ export class CommentServices {
 		return result;
 	}
 
-	static async UpdateComment(commentId:string,authorId:string,content:string):Promise<IComment | undefined> {
-	const comment = await CommentModel.findById(commentId);
+	static async UpdateComment(
+		commentId: string,
+		authorId: string,
+		content: string
+	): Promise<IComment | undefined> {
+		const comment = await CommentModel.findById(commentId);
 
-  if (!comment) {
-    throw new AppError('Comment not found', 404);
-  }
+		if (!comment) {
+			throw new AppError('Comment not found', 404);
+		}
 
-  // Ownership check
-  if (comment.author.toString() !== authorId) {
-    throw new AppError('You are not allowed to update this comment', 403);
-  }
+		// Ownership check
+		if (comment.author.toString() !== authorId) {
+			throw new AppError('You are not allowed to update this comment', 403);
+		}
 
-  comment.content = content;
-  return await comment.save();
+		comment.content = content;
+		return await comment.save();
+	}
+
+	static async DeleteComment(
+		blog_id: string,
+		commentId: string,
+		author: string
+	) {
+		const response = await CommentModel.findById(commentId);
+		if (!response) {
+			throw new AppError('Resource Not Found', 404);
+		}
+		if (response.author.toString() !== author) {
+			throw new AppError('Access Denied', 403);
+		}
+		await CommentModel.findByIdAndDelete(commentId);
+		await UserModel.findByIdAndUpdate(author, {
+			$pull: { comments: commentId },
+		});
+		await BlogModel.findByIdAndUpdate(
+			blog_id,
+			{
+				$inc: {
+					commentsCount: -1,
+				},
+			},
+			{
+				new: true,
+			}
+		);
 	}
 }

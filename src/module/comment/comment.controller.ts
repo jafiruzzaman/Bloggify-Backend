@@ -112,49 +112,55 @@ export class CommentController {
 		}
 	}
 
-static async UpdateComment(req: Request, res: Response) {
-  const authUser = (req as any).user;
-  const { comment_id: commentId } = req.params;
-  const { content } = req.body;
+	static async UpdateComment(req: Request, res: Response) {
+		const authUser = (req as any).user;
+		const { comment_id: commentId } = req.params;
+		const { content } = req.body;
 
-  if (!commentId || !content) {
-    return res.status(400).json({
-      success: false,
-      message: 'Comment ID and content are required',
-    });
-  }
+		if (!commentId || !content) {
+			return res.status(400).json({
+				success: false,
+				message: 'Comment ID and content are required',
+			});
+		}
 
-  try {
-    const updatedComment = await CommentServices.UpdateComment(commentId.toString(),authUser.id.toString(),content)
+		try {
+			const updatedComment = await CommentServices.UpdateComment(
+				commentId.toString(),
+				authUser.id.toString(),
+				content
+			);
 
-    return res.status(200).json({
-      success: true,
-      message: 'Comment updated successfully',
-      data: updatedComment,
-    });
-  } catch (error) {
-    if (error instanceof AppError) {
-      return res.status(error.statusCode).json({
-        success: false,
-        message: error.message,
-      });
-    }
+			return res.status(200).json({
+				success: true,
+				message: 'Comment updated successfully',
+				data: updatedComment,
+			});
+		} catch (error) {
+			if (error instanceof AppError) {
+				return res.status(error.statusCode).json({
+					success: false,
+					message: error.message,
+				});
+			}
 
-    return res.status(500).json({
-      success: false,
-      message: 'Internal Server Error',
-    });
-  }
-}
-
-
+			return res.status(500).json({
+				success: false,
+				message: 'Internal Server Error',
+			});
+		}
+	}
 
 	static async DeleteComment(req: Request, res: Response) {
 		const authUser = (req as any).user;
-		const blogId = req.params;
+		const { comment_id: id, blog_id } = req.params;
 
 		try {
-			// const response =
+			const response = await CommentServices.DeleteComment(
+				blog_id as string,
+				id as string,
+				authUser.id
+			);
 			return res.status(204).send();
 		} catch (error) {
 			if (error instanceof AppError) {
