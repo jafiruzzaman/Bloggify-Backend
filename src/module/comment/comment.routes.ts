@@ -3,47 +3,27 @@
  */
 
 /*============================================== Node Modules ============================================== */
-import { Router, type Request, type Response } from 'express';
+import { Router } from 'express';
 
 /*============================================== Custom Modules ============================================== */
 import { authenticate } from '@middlewares/auth.middleware.ts';
+import { CommentController } from './comment.controller.ts';
 
 /*============================================== Routes ============================================== */
 const router: Router = Router();
 
-router.post('/', authenticate, (req: Request, res: Response) => {
-	res.status(201).json({
-		success: true,
-		message: 'Comment Posted Successfully',
-	});
-});
+router.post('/', authenticate, CommentController.PostComment);
 
-router.get('/blog/:blog_id/', authenticate, (req: Request, res: Response) => {
-	res.status(200).json({
-		success: true,
-		message: 'Get All Comments',
-	});
-});
+router.get(
+	'/blog/:blog_id/',
+	authenticate,
+	CommentController.GetCommentsByBlog
+);
 
-router.get('/:comment_id', authenticate, (req: Request, res: Response) => {
-	res.status(200).json({
-		success: true,
-		message: 'Get Single Comment',
-	});
-});
+router.get('/:comment_id', authenticate, CommentController.GetComment);
 
-router.patch('/:comment_id', authenticate, (req: Request, res: Response) => {
-	res.status(200).json({
-		success: true,
-		message: 'Comment Updated Success',
-	});
-});
-router.delete('/:comment_id', authenticate, (req: Request, res: Response) => {
-	res.status(204).json({
-		success: true,
-		message: 'Comment Updated Success',
-	});
-});
+router.patch('/:comment_id', authenticate, CommentController.UpdateComment);
+router.delete('/:comment_id', authenticate, CommentController.DeleteComment);
 
 /*============================================== Export Routes ============================================== */
 export { router as CommentRouter };
