@@ -5,7 +5,7 @@
 /*============================================== Node Modules ============================================== */
 import type { Request, Response } from 'express';
 
-/*============================================== Node Modules ============================================== */
+/*============================================== Custom Modules ============================================== */
 import { AppError } from '@utils/appError.ts';
 import { BlogService } from './blog.service.ts';
 import slug from 'slug';
@@ -122,6 +122,7 @@ export class BlogController {
 			}
 		}
 	}
+
 	static async updateBlog(req: Request, res: Response) {
 		const authUser = (req as any).user;
 		const { id: blogId } = req.params;
@@ -162,6 +163,47 @@ export class BlogController {
 				success: true,
 				message: 'Blog updated successfully',
 				data: response,
+			});
+		} catch (error) {
+			if (error instanceof AppError) {
+				return res.status(400).json({
+					success: false,
+					message: error.message,
+				});
+			}
+
+			return res.status(500).json({
+				success: false,
+				message: 'Internal Server Error',
+			});
+		}
+	}
+
+	static async deleteBlog(req: Request, res: Response) {
+		const authUser = (req as any).user;
+		const { id: blogId } = req.params;
+		if (!blogId) {
+			return res.status(400).json({
+				success: false,
+				message: 'Blog Id Required',
+			});
+		}
+		const blog = await BlogModel.findById(blogId);
+		if (!blog) {
+			return res.status(404).json({
+				success: false,
+				message: 'Resource Not Found',
+			});
+		}
+
+		try {
+			const response = await BlogService.deleteBlog(
+				blogId.toString(),
+				authUser.id.toString()
+			);
+			return res.status(204).json({
+				success: true,
+				message: 'Blog Deleted Successfully',
 			});
 		} catch (error) {
 			if (error instanceof AppError) {

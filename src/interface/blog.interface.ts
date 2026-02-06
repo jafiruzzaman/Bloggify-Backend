@@ -17,6 +17,7 @@ export interface IBlog extends Document {
 	likesCount: number;
 	commentsCount: number;
 	status: 'published' | 'draft';
+	category: string;
 	createdAt: Date;
 	updatedAt: Date;
 }

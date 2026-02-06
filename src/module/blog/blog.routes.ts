@@ -20,11 +20,6 @@ router.get('/:slug', BlogController.GetBlogBySlug);
 
 router.patch('/:id', authenticate, BlogController.updateBlog);
 
-router.delete('/:id', (req: Request, res: Response) => {
-	return res.status(204).json({
-		success: true,
-		message: 'Blog deleted Successfully',
-	});
-});
+router.delete('/:id', authenticate, BlogController.deleteBlog);
 
 export { router as BlogRouter };

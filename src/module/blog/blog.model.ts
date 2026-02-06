@@ -50,6 +50,9 @@ const blogSchema = new Schema<IBlog>(
 			enum: ['published', 'draft'],
 			default: 'published',
 		},
+		category: {
+			type: String,
+		},
 	},
 	{ timestamps: true }
 );
