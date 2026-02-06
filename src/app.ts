@@ -18,7 +18,6 @@ import { userRouter } from '@module/user/user.routes.ts';
 import { BlogRouter } from '@module/blog/blog.routes.ts';
 import { LikeRouter } from '@module/like/like.routes.ts';
 
-
 const app: Express = express();
 
 /*============================================== Trust Proxy (IMPORTANT) ============================================== */

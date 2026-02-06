@@ -3,31 +3,19 @@
  */
 
 /*============================================== Node Modules ============================================== */
-import { Router, type Request, type Response } from 'express';
+import { Router } from 'express';
 
 /*============================================== Custom Modules ============================================== */
 import { authenticate } from '@middlewares/auth.middleware.ts';
+import { LikeController } from './like.controller.ts';
 
+/*============================================== Router ============================================== */
 const router = Router();
 
-router.post('/:blog_id', authenticate, async (req: Request, res: Response) => {
-	// service.likeBlog(req.user.id, req.params.blog_id)
-	return res.status(201).json({
-		success: true,
-		message: 'Blog liked successfully',
-	});
-});
+/*============================================== Routes ============================================== */
+router.post('/:blog_id', authenticate, LikeController.LikeBlog);
 
-/**
- * Unlike a blog
- */
-router.delete(
-	'/:blog_id',
-	authenticate,
-	async (req: Request, res: Response) => {
-		// service.unlikeBlog(req.user.id, req.params.blog_id)
-		return res.status(204).send();
-	}
-);
+router.delete('/:blog_id', authenticate, LikeController.DislikeBlog);
 
+/*============================================== Router ============================================== */
 export { router as LikeRouter };
