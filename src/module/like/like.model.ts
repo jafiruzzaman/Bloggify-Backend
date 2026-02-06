@@ -6,7 +6,7 @@
 import { Schema, model, Model, Types } from 'mongoose';
 
 /*============================================== Like Interface ============================================== */
-interface ILike {
+export interface ILike {
 	_id: Types.ObjectId;
 	author: Types.ObjectId;
 	blog: Types.ObjectId;

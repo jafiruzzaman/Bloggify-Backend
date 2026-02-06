@@ -7,6 +7,9 @@ import { type Request, type Response } from 'express';
 
 /*============================================== Custom Modules ============================================== */
 import { AppError } from '@utils/appError.ts';
+import type { ILike } from './like.model.ts';
+import { LikeService } from './like.service.ts';
+import { BlogModel } from '@module/blog/blog.model.ts';
 
 /*============================================== Like Controller ============================================== */
 
@@ -14,11 +17,22 @@ export class LikeController {
 	static async LikeBlog(req: Request, res: Response) {
 		const { blog_id: blog_Id } = req.params;
 		const authUser = (req as any).user;
-
+		const blog = await BlogModel.findById(blog_Id);
+		if (!blog) {
+			return res.status(404).json({
+				success: false,
+				Message: 'No Blog Found',
+			});
+		}
 		try {
+			const data: ILike = await LikeService.Like(
+				authUser.id.toString(),
+				blog_Id as string
+			);
 			return res.status(201).json({
 				success: true,
 				message: 'Blog liked successfully',
+				data,
 			});
 		} catch (error) {
 			if (error instanceof AppError) {
@@ -37,6 +51,7 @@ export class LikeController {
 	static async DislikeBlog(req: Request, res: Response) {
 		const { blog_id: blog_Id } = req.params;
 		const authUser = (req as any).user;
+
 		try {
 			return res.status(204).send();
 		} catch (error) {
