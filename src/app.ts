@@ -9,13 +9,17 @@ import cookieParser from 'cookie-parser';
 import cors, { type CorsOptions } from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
+
+/*============================================== Custom Modules ============================================== */
 import { rateLimit } from '@config/rateLimit.config.ts';
 import { env } from '@config/env.config.ts';
 import { AuthRouter } from '@module/auth/auth.routes.ts';
 import { userRouter } from '@module/user/user.routes.ts';
 import { BlogRouter } from '@module/blog/blog.routes.ts';
+import { LikeRouter } from '@module/like/like.routes.ts';
+import { globalErrorHandler } from '@middlewares/global.middleware.ts';
+import { CommentRouter } from '@module/comment/comment.routes.ts';
 
-/*============================================== Custom Modules ============================================== */
 const app: Express = express();
 
 /*============================================== Trust Proxy (IMPORTANT) ============================================== */
@@ -99,6 +103,9 @@ app.get('/health', (_req: Request, res: Response) => {
 app.use('/api/v1/auth', AuthRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/blogs', BlogRouter);
+app.use('/api/v1/likes', LikeRouter);
+app.use('/api/v1/comments', CommentRouter);
+
 /*============================================== 404 Handler ============================================== */
 app.use((_req: Request, res: Response) => {
 	res.status(404).json({
@@ -106,6 +113,8 @@ app.use((_req: Request, res: Response) => {
 		message: 'Route not found',
 	});
 });
+
+app.use(globalErrorHandler);
 
 /*============================================== Export App ============================================== */
 export { app };

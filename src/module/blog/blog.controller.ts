@@ -5,7 +5,7 @@
 /*============================================== Node Modules ============================================== */
 import type { Request, Response } from 'express';
 
-/*============================================== Node Modules ============================================== */
+/*============================================== Custom Modules ============================================== */
 import { AppError } from '@utils/appError.ts';
 import { BlogService } from './blog.service.ts';
 import slug from 'slug';
@@ -197,7 +197,10 @@ export class BlogController {
 		}
 
 		try {
-			const response = await BlogService.DeleteBlog(blogId.toString());
+			const response = await BlogService.deleteBlog(
+				blogId.toString(),
+				authUser.id.toString()
+			);
 			return res.status(204).json({
 				success: true,
 				message: 'Blog Deleted Successfully',
