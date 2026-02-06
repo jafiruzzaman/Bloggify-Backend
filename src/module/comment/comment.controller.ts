@@ -7,6 +7,7 @@ import type { Request, Response } from 'express';
 /*============================================== Node Modules ============================================== */
 import { AppError } from '@utils/appError.ts';
 import { CommentServices } from './comment.service.ts';
+import { CommentModel } from './comment.model.ts';
 
 /*============================================== Comment Controller ============================================== */
 
@@ -111,36 +112,42 @@ export class CommentController {
 		}
 	}
 
-	static async UpdateComment(req: Request, res: Response) {
-		const authUser = (req as any).user;
-		const blogId = req.params;
-		const { content } = req.body;
-		if (!authUser.id || !blogId || !content) {
-			return res.status(400).json({
-				success: false,
-				message: 'All fields are required',
-			});
-		}
-		try {
-			// const response =
-			return res.status(200).json({
-				success: true,
-				message: 'Update Comment Successfully',
-			});
-		} catch (error) {
-			if (error instanceof AppError) {
-				return res.status(error.statusCode).json({
-					success: false,
-					message: error.message,
-				});
-			} else {
-				return res.status(500).json({
-					success: false,
-					message: 'Internal Server Error',
-				});
-			}
-		}
-	}
+static async UpdateComment(req: Request, res: Response) {
+  const authUser = (req as any).user;
+  const { comment_id: commentId } = req.params;
+  const { content } = req.body;
+
+  if (!commentId || !content) {
+    return res.status(400).json({
+      success: false,
+      message: 'Comment ID and content are required',
+    });
+  }
+
+  try {
+    const updatedComment = await CommentServices.UpdateComment(commentId.toString(),authUser.id.toString(),content)
+
+    return res.status(200).json({
+      success: true,
+      message: 'Comment updated successfully',
+      data: updatedComment,
+    });
+  } catch (error) {
+    if (error instanceof AppError) {
+      return res.status(error.statusCode).json({
+        success: false,
+        message: error.message,
+      });
+    }
+
+    return res.status(500).json({
+      success: false,
+      message: 'Internal Server Error',
+    });
+  }
+}
+
+
 
 	static async DeleteComment(req: Request, res: Response) {
 		const authUser = (req as any).user;

@@ -9,6 +9,7 @@ import { BlogModel } from '@module/blog/blog.model.ts';
 import { CommentModel } from './comment.model.ts';
 import { UserModel } from '@module/user/user.model.ts';
 import type { IComment } from '@interface/comment.interface.ts';
+import { AppError } from '@utils/appError.ts';
 
 /*============================================== Comment Services ============================================== */
 interface payload {
@@ -53,5 +54,21 @@ export class CommentServices {
 			return;
 		}
 		return result;
+	}
+
+	static async UpdateComment(commentId:string,authorId:string,content:string):Promise<IComment | undefined> {
+	const comment = await CommentModel.findById(commentId);
+
+  if (!comment) {
+    throw new AppError('Comment not found', 404);
+  }
+
+  // Ownership check
+  if (comment.author.toString() !== authorId) {
+    throw new AppError('You are not allowed to update this comment', 403);
+  }
+
+  comment.content = content;
+  return await comment.save();
 	}
 }
