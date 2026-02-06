@@ -13,7 +13,7 @@ import { UserModel } from '@module/user/user.model.ts';
 interface payload {
 	author: string;
 	blog: string;
-	content: string;
+	content?: string;
 }
 export class CommentServices {
 	static async PostComment(payload: payload) {
@@ -35,5 +35,15 @@ export class CommentServices {
 			},
 		});
 		return comment;
+	}
+	static async GetCommentByBlog(payload: payload) {
+		const data = CommentModel.findOne({
+			author: payload.author,
+			blog: payload.blog,
+		});
+		if (!data) {
+			return;
+		}
+		return data;
 	}
 }

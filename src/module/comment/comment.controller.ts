@@ -52,13 +52,18 @@ export class CommentController {
 
 	static async GetCommentsByBlog(req: Request, res: Response) {
 		const authUser = (req as any).user;
-		const blogId = req.params.blog_id;
+		const { blog_id: blogId } = req.params;
+		console.log(` Blog id ${blogId}`);
 
 		try {
-			// const response =
+			const response = await CommentServices.GetCommentByBlog({
+				author: authUser.id,
+				blog: blogId as string,
+			});
 			return res.status(200).json({
 				success: true,
 				message: 'Get Comments By Blog Successfully',
+				data: response,
 			});
 		} catch (error) {
 			if (error instanceof AppError) {
