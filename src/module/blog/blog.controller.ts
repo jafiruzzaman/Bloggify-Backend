@@ -5,7 +5,7 @@
 /*============================================== Node Modules ============================================== */
 import type { Request, Response } from 'express';
 
-/*============================================== Node Modules ============================================== */
+/*============================================== Custom Modules ============================================== */
 import { AppError } from '@utils/appError.ts';
 import { BlogService } from './blog.service.ts';
 import slug from 'slug';
