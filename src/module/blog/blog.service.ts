@@ -7,6 +7,7 @@
 /*============================================== Custom Modules ============================================== */
 import type { IBlog } from '@interface/blog.interface.ts';
 import { BlogModel } from './blog.model.ts';
+import { UserModel } from '@module/user/user.model.ts';
 
 /*============================================== Payload Interface ============================================== */
 interface payload {
@@ -22,6 +23,11 @@ interface payload {
 export class BlogService {
 	static async CreateBlog(payload: payload): Promise<IBlog> {
 		const result = await BlogModel.create(payload);
+		await UserModel.findByIdAndUpdate(payload.author, {
+			$push: {
+				blogs: result._id,
+			},
+		});
 		return result;
 	}
 	static async GetAllBlogs(): Promise<IBlog[]> {
@@ -46,6 +52,12 @@ export class BlogService {
 		return await BlogModel.findByIdAndUpdate(id, updateQuery, {
 			new: true,
 			runValidators: true,
+		});
+	}
+
+	static async DeleteBlog(id: string): Promise<void | null> {
+		return await BlogModel.findByIdAndDelete(id, {
+			new: true,
 		});
 	}
 }
