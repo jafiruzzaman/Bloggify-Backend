@@ -17,6 +17,7 @@ import { AuthRouter } from '@module/auth/auth.routes.ts';
 import { userRouter } from '@module/user/user.routes.ts';
 import { BlogRouter } from '@module/blog/blog.routes.ts';
 import { LikeRouter } from '@module/like/like.routes.ts';
+import { globalErrorHandler } from '@middlewares/global.middleware.ts';
 
 const app: Express = express();
 
@@ -109,6 +110,8 @@ app.use((_req: Request, res: Response) => {
 		message: 'Route not found',
 	});
 });
+
+app.use(globalErrorHandler);
 
 /*============================================== Export App ============================================== */
 export { app };

@@ -51,8 +51,15 @@ export class LikeController {
 	static async DislikeBlog(req: Request, res: Response) {
 		const { blog_id: blog_Id } = req.params;
 		const authUser = (req as any).user;
-
+		const blog = await BlogModel.findById(blog_Id);
+		if (!blog) {
+			return res.status(404).json({
+				success: false,
+				Message: 'No Blog Found',
+			});
+		}
 		try {
+			await LikeService.Dislike(authUser.id.toString(), blog_Id as string);
 			return res.status(204).send();
 		} catch (error) {
 			if (error instanceof AppError) {
