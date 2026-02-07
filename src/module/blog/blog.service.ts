@@ -8,6 +8,7 @@
 import type { IBlog } from '@interface/blog.interface.js';
 import { BlogModel } from './blog.model.js';
 import { UserModel } from '@module/user/user.model.js';
+import { IBlogQuery } from '@interface/blogquery.interface.js';
 
 /*============================================== Payload Interface ============================================== */
 interface payload {
@@ -30,8 +31,27 @@ export class BlogService {
 		});
 		return result;
 	}
-	static async GetAllBlogs(): Promise<IBlog[]> {
-		return await BlogModel.find();
+	static async GetAllBlogs(query: IBlogQuery): Promise<IBlog[]> {
+		const {
+			authors,
+			tags,
+			limit = 10,
+			page = 1,
+			sort = '-createdAt',
+		} = query as IBlogQuery;
+		const filter: any = {};
+		if (authors) {
+			filter.author = { $in: authors.split(',') };
+		}
+		if (tags) {
+			filter.tags = {
+				$in: tags.split(','),
+			};
+		}
+		// pagination
+		const skip = (page - 1) * limit;
+
+		return await BlogModel.find(filter).sort(sort).skip(skip).limit(limit);
 	}
 	static async GetBlogBySlug(slug: string): Promise<IBlog | null> {
 		return await BlogModel.findOne({
