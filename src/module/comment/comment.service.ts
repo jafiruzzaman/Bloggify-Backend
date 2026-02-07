@@ -50,7 +50,6 @@ export class CommentServices {
 	}
 	static async GetComment(id: string): Promise<IComment | null> {
 		const result: IComment | null = await CommentModel.findById(id);
-		console.log(` result`, result);
 		return result;
 	}
 

@@ -16,7 +16,6 @@ export class CommentController {
 		const authUser = (req as any).user;
 		const { blog_id: blogId } = req.params;
 		const { content } = req.body;
-		console.log(authUser.id, blogId, content);
 
 		if (!authUser.id || !blogId || !content) {
 			return res.status(400).json({
@@ -54,7 +53,6 @@ export class CommentController {
 	static async GetCommentsByBlog(req: Request, res: Response) {
 		const authUser = (req as any).user;
 		const { blog_id: blogId } = req.params;
-		console.log(` Blog id ${blogId}`);
 
 		try {
 			const response = await CommentServices.GetCommentByBlog({
