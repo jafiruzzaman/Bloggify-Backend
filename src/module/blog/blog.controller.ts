@@ -11,6 +11,7 @@ import { AppError } from '@utils/appError.js';
 import { BlogService } from './blog.service.js';
 import type { IBlog } from '@interface/blog.interface.js';
 import { BlogModel } from './blog.model.js';
+import { IBlogQuery } from '@interface/blogquery.interface.js';
 
 export class BlogController {
 	static async createBlog(req: Request, res: Response) {
@@ -72,8 +73,9 @@ export class BlogController {
 	}
 
 	static async GetAllBlogs(req: Request, res: Response) {
+		const query = req.query as IBlogQuery;
 		try {
-			const response: IBlog[] = await BlogService.GetAllBlogs();
+			const response: IBlog[] = await BlogService.GetAllBlogs(query);
 			return res.status(200).json({
 				success: true,
 				message: 'Fetched All Blogs',
