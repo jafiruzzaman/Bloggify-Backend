@@ -2,7 +2,7 @@
   "compilerOptions": {
     "rootDir": "src",
     "outDir": "dist",
-    "baseUrl": "./src/",
+    "baseUrl": "./src",
     "paths": {
       "@config/*": ["config/*"],
       "@interface/*": ["interface/*"],

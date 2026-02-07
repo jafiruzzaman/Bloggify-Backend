@@ -6,8 +6,8 @@
   "type": "module",
   "main": "dist/index.js",
   "scripts": {
-    "build": "tsc && yarn tsc-alias",
-    "dev": "ts-node src/index.ts",
+    "build": "tsc && bun tsc-alias",
+    "dev": "bun --watch src/index.ts",
     "start": "node dist/index.js",
     "format": "bunx prettier . --write"
   },
