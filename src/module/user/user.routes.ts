@@ -6,9 +6,9 @@
 import { Router, type Request, type Response } from 'express';
 
 /*============================================== Custom Modules ============================================== */
-import { UserController } from './user.controller.ts';
-import { authenticate } from '@middlewares/auth.middleware.ts';
-import { admin } from '@middlewares/admin.middleware.ts';
+import { UserController } from './user.controller.js';
+import { authenticate } from '@middlewares/auth.middleware.js';
+import { admin } from '@middlewares/admin.middleware.js';
 
 const router: Router = Router();
 

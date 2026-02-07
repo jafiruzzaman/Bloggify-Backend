@@ -6,11 +6,11 @@
 import type { Request, Response } from 'express';
 
 /*============================================== Custom Modules ============================================== */
-import { AuthService } from './auth.service.ts';
-import { AppError } from '@utils/appError.ts';
-import { generateAccessToken, generateRefreshToken } from '@utils/jwt.utils.ts';
-import { UserModel } from '@module/user/user.model.ts';
-import { env } from '@config/env.config.ts';
+import { AuthService } from './auth.service.js';
+import { AppError } from '@utils/appError.js';
+import { generateAccessToken, generateRefreshToken } from '@utils/jwt.utils.js';
+import { UserModel } from '@module/user/user.model.js';
+import { env } from '@config/env.config.js';
 
 export class AuthController {
 	static async signUp(req: Request, res: Response) {

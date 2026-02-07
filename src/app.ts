@@ -11,14 +11,14 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 
 /*============================================== Custom Modules ============================================== */
-import { rateLimit } from '@config/rateLimit.config.ts';
-import { env } from '@config/env.config.ts';
-import { AuthRouter } from '@module/auth/auth.routes.ts';
-import { userRouter } from '@module/user/user.routes.ts';
-import { BlogRouter } from '@module/blog/blog.routes.ts';
-import { LikeRouter } from '@module/like/like.routes.ts';
-import { globalErrorHandler } from '@middlewares/global.middleware.ts';
-import { CommentRouter } from '@module/comment/comment.routes.ts';
+import { rateLimit } from '@config/rateLimit.config.js';
+import { env } from '@config/env.config.js';
+import { AuthRouter } from '@module/auth/auth.routes.js';
+import { userRouter } from '@module/user/user.routes.js';
+import { BlogRouter } from '@module/blog/blog.routes.js';
+import { LikeRouter } from '@module/like/like.routes.js';
+import { globalErrorHandler } from '@middlewares/global.middleware.js';
+import { CommentRouter } from '@module/comment/comment.routes.js';
 
 const app: Express = express();
 

@@ -3,7 +3,7 @@
  */
 
 /*============================================== Node Modules ============================================== */
-import type { IBlog } from '@interface/blog.interface.ts';
+import type { IBlog } from '@interface/blog.interface.js';
 import { Model, model, Schema, Types } from 'mongoose';
 
 const blogSchema = new Schema<IBlog>(

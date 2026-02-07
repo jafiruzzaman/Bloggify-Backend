@@ -6,8 +6,8 @@
 import { Router } from 'express';
 
 /*============================================== Custom Modules ============================================== */
-import { authenticate } from '@middlewares/auth.middleware.ts';
-import { LikeController } from './like.controller.ts';
+import { authenticate } from '@middlewares/auth.middleware.js';
+import { LikeController } from './like.controller.js';
 
 /*============================================== Router ============================================== */
 const router = Router();

@@ -6,10 +6,10 @@ import { Types } from 'mongoose';
 /*============================================== Node Modules ============================================== */
 
 /*============================================== Custom Modules ============================================== */
-import { UserModel } from '@module/user/user.model.ts';
-import { LikeModel, type ILike } from './like.model.ts';
-import { BlogModel } from '@module/blog/blog.model.ts';
-import { AppError } from '@utils/appError.ts';
+import { UserModel } from '@module/user/user.model.js';
+import { LikeModel, type ILike } from './like.model.js';
+import { BlogModel } from '@module/blog/blog.model.js';
+import { AppError } from '@utils/appError.js';
 
 /*============================================== Like Services ============================================== */
 export class LikeService {

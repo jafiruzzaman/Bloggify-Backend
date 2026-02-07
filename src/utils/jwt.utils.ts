@@ -3,7 +3,7 @@
  */
 
 /*============================================== Node Modules ============================================== */
-import { env } from '@config/env.config.ts';
+import { env } from '@config/env.config.js';
 import jwt from 'jsonwebtoken';
 import type ms from 'ms';
 export interface JWTPayload {

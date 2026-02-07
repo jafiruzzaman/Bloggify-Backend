@@ -4,12 +4,12 @@
 
 /*============================================== Node Modules ============================================== */
 import type { NextFunction, Request, Response } from 'express';
-import { verify } from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 
 /*============================================== Custom Modules ============================================== */
-import { env } from '@config/env.config.ts';
-import { AppError } from '@utils/appError.ts';
-import type { JWTPayload } from '@utils/jwt.utils.ts';
+import { env } from '../config/env.config.js';
+import { AppError } from '../utils/appError.js';
+import type { JWTPayload } from '../utils/jwt.utils.js';
 
 export const authenticate = (
 	req: Request,
@@ -31,7 +31,7 @@ export const authenticate = (
 		}
 
 		// ✅ Type assertion to JWTPayload
-		const decoded = verify(token, env.accessTokenSecret) as JWTPayload;
+		const decoded = jwt.verify(token, env.accessTokenSecret) as JWTPayload;
 
 		// Attach user info to request
 		(req as any).user = decoded;

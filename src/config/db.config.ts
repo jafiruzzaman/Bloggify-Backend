@@ -5,7 +5,7 @@
 /*============================================== Node Modules ============================================== */
 import mongoose from 'mongoose';
 /*============================================== Custom Modules ============================================== */
-import { env } from './env.config.ts';
+import { env } from './env.config.js';
 let isConnected: boolean = false;
 const connectDB = async (): Promise<void> => {
 	// if already connect with DB

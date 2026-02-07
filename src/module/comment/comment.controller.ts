@@ -5,9 +5,9 @@
 /*============================================== Node Modules ============================================== */
 import type { Request, Response } from 'express';
 /*============================================== Node Modules ============================================== */
-import { AppError } from '@utils/appError.ts';
-import { CommentServices } from './comment.service.ts';
-import { CommentModel } from './comment.model.ts';
+import { AppError } from '@utils/appError.js';
+import { CommentServices } from './comment.service.js';
+import { CommentModel } from './comment.model.js';
 
 /*============================================== Comment Controller ============================================== */
 
@@ -84,6 +84,7 @@ export class CommentController {
 	static async GetComment(req: Request, res: Response) {
 		const authUser = (req as any).user;
 		const { comment_id: id } = req.params;
+		// @ts-ignore
 		if (!authUser.id || !{ comment_id: id }) {
 			return res.status(400).json({
 				success: false,

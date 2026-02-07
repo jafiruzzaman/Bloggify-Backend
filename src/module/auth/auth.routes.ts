@@ -6,10 +6,10 @@
 import { Router } from 'express';
 
 /*============================================== Custom Modules ============================================== */
-import { signInSchema, signUpSchema } from '@validation/auth.validation.ts';
-import { validate } from 'middlewares/validate.middleware.ts';
-import { AuthController } from './auth.controller.ts';
-import { authenticate } from 'middlewares/auth.middleware.ts';
+import { signInSchema, signUpSchema } from '@validation/auth.validation.js';
+import { validate } from 'middlewares/validate.middleware.js';
+import { AuthController } from './auth.controller.js';
+import { authenticate } from 'middlewares/auth.middleware.js';
 const router: Router = Router();
 
 router.post('/sign-up', validate(signUpSchema), AuthController.signUp);

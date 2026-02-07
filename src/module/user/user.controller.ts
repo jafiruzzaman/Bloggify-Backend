@@ -6,8 +6,8 @@
 import type { Request, Response } from 'express';
 
 /*============================================== Custom Modules ============================================== */
-import { AppError } from '@utils/appError.ts';
-import { UserService } from './user.service.ts';
+import { AppError } from '@utils/appError.js';
+import { UserService } from './user.service.js';
 
 export class UserController {
 	static async getAllUsers(req: Request, res: Response) {
